@@ -25,7 +25,7 @@ class CreateBookRequest extends FormRequest
             "title" => "required|max:255|min:2",
             "resume" => "required|max:1000|min:10",
             "published_at" => "required|date",
-            "cover" => "required|url",
+            "cover" => "required|file|image|mimes:jpg,png,jpeg|max:10024",
             "price" => "required|numeric|min:0",
             "editor_id" => "required|exists:App\Models\Editor,id",
         ];

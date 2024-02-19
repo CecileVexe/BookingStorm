@@ -40,3 +40,5 @@ Route::post(
 )->name("book.store");*/
 
 Route::resource("book", BookControler::class);
+
+Route::get("book/{book}/pdf", [BookControler::class, "pdf"])->name("book.pdf");

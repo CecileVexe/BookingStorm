@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container mx-auto mt-10">
-        <form action="{{ route('book.update', $book)}}" method="post">
+        <form action="{{ route('book.update', $book)}}" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <!-- @dump($errors)-->
@@ -37,7 +37,8 @@
                 <div class="text-red-500">{{$message}}</div>
                 @enderror
                 <div class="mt-2.5">
-                    <input type="text" name="cover" id="cover" value="{{$book->cover}}" class="block border w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <img src="{{asset("storage/covers/$book->cover")}}" alt="couverture {{$book->title}}" class="w-40" />
+                    <input type="file" name="cover" id="cover" value="{{$book->cover}}" class="block border w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
             </div>
             <div>

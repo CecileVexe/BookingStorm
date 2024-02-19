@@ -9,7 +9,7 @@
         <div class="grid grid-cols-5 grid-cols-5 gap-6">
             @foreach ($books as $book)
                 <div class="flex flex-col">
-                    <img src="{{ $book->cover }}" class="w-full aspect-book object-cover rounded-lg shadow-lg mb-4"/>
+                    <img src="{{asset("storage/covers/$book->cover")}}" class="w-full aspect-book object-cover rounded-lg shadow-lg mb-4"/>
                     <div class="flex items-center gap-x-4 text-xs">
                         <time datetime="{{ $book->published_at }}" class="text-gray-500">{{ $book->published_at->format('d M Y') }}</time>
                         <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">

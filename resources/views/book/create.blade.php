@@ -1,7 +1,7 @@
 <x-layout>
-    @dump($errors);
+   {{-- @dump($errors); --}}
     <div class="container mx-auto mt-10">
-        <form action="{{ route('book.store') }}" method="post">
+        <form action="{{ route('book.store') }}" method="post" enctype="multipart/form-data"> {{--enctype for enabled file post--}}
             @csrf
             <div>
                 <label for="title" class="block text-sm font-semibold leading-6 text-gray-900">Titre</label>
@@ -36,7 +36,7 @@
                 <div class="text-red-500">{{$message}}</div>
                 @enderror
                 <div class="mt-2.5">
-                    <input type="text" name="cover" id="cover" value="{{old("cover")}}" class="block border w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input type="file" name="cover" id="cover" value="{{old("cover")}}" class="block border w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
             </div>
             <div>

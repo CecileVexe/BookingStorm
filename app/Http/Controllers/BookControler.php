@@ -6,7 +6,9 @@ use App\Http\Requests\CreateBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Models\Editor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookControler extends Controller
 {
@@ -34,8 +36,14 @@ class BookControler extends Controller
      */
     public function store(CreateBookRequest $request)
     {
+        //dd($request->all()); to dump the request data
+        $request->file("cover")->store("public/covers"); //store file into the app/public/cover folder
+
         $book = Book::create(
-            $request->validated()
+            [
+                ...$request->validated(),
+                "cover" => $request->file("cover")->hashName() //remplace cover with the hash name
+            ]
         );
 
         return redirect()->route("book.show", $book);
@@ -64,8 +72,22 @@ class BookControler extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
+
+        if ($request->hasFile("cover")) {
+            Storage::delete("public/covers/" . $book->cover);
+            $request->file("cover")->store("public/covers"); //store file into the app/public/cover folder
+            $book->update([
+                ...$request->validated(),
+                "cover" => $request->file("cover")->hashName() //remplace cover with the hash name
+            ]);
+        } else {
+            $book->update(
+                $request->validated()
+            );
+        };
+
         /*dd($request->all(), $book);*/
-        $book->update($request->validated());
+
         return redirect()->route("book.show", $book);
     }
 
@@ -76,5 +98,11 @@ class BookControler extends Controller
     {
         $book->delete();
         return redirect()->route("book.index");
+    }
+
+    public function pdf(Book $book)
+    {
+        $pdf = Pdf::loadView('pdf.book', ["book" => $book]);
+        return $pdf->download($book->title . '.pdf');
     }
 }
