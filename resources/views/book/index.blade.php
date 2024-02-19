@@ -28,5 +28,6 @@
                 </div>
             @endforeach
         </div>
+        {{ $books->links() }}
     </div>
 </x-layout>
