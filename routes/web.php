@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\BookControler;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +43,24 @@ Route::post(
     BookControler::class . "@store"
 )->name("book.store");*/
 
-Route::resource("book", BookControler::class);
+Route::resource("book", BookControler::class)->except(["show", "index"])->middleware("auth");
+
+Route::resource("book", BookControler::class)->only(["show", "index"]);
+//Route::resource créer toutes les routes pour le CRUD
 
 Route::get("book/{book}/pdf", [BookControler::class, "pdf"])->name("book.pdf");
+
+Route::get(
+    "/login",
+    LoginController::class . "@show"
+)->name("login");
+
+Route::post(
+    "/login",
+    LoginController::class . "@authenticate"
+)->name("login");
+
+Route::post(
+    "/logout",
+    LogoutController::class . "@logout"
+)->name("logout");

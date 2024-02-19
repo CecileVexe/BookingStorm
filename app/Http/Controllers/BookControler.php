@@ -42,7 +42,8 @@ class BookControler extends Controller
         $book = Book::create(
             [
                 ...$request->validated(),
-                "cover" => $request->file("cover")->hashName() //remplace cover with the hash name
+                "cover" => $request->file("cover")->hashName(), //remplace cover with the hash name
+                "price" => $request->input("price") * 100
             ]
         );
 
@@ -78,7 +79,8 @@ class BookControler extends Controller
             $request->file("cover")->store("public/covers"); //store file into the app/public/cover folder
             $book->update([
                 ...$request->validated(),
-                "cover" => $request->file("cover")->hashName() //remplace cover with the hash name
+                "cover" => $request->file("cover")->hashName(), //remplace cover with the hash name
+                "price" => $request->input("price") * 100
             ]);
         } else {
             $book->update(
