@@ -34,8 +34,9 @@
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a href="{{route("book.index")}}" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Catalogue</a>
+            @can("create", App\Models\Book::class)
             <a href="{{route("book.create")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Créer</a>
-            
+            @endcan
           </div>
         </div>
       </div>
@@ -47,7 +48,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
           </svg>
         </button>
-      <div>
+      <div class="flex">
         @auth
         <form action="{{route("logout")}}" method="post"> {{--Dans un form pour éviter les déconnection non désiré--}}
           @csrf
@@ -56,7 +57,12 @@
         @endauth  
         @guest
             <a href="{{route("login")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se Connecter</a>
-        @endguest
+       
+        <div>
+       <a href="{{route("register")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">S'inscrire
+       </a>
+        </div>
+         @endguest
      </div> 
     </div>
     </div>

@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Storage;
 
 class BookControler extends Controller
 {
+
+    /**public function __construct()
+    {
+        $this->authorizeResource(Book::class);
+    }*/
+
     /**
      * Display a listing of the resource.
      */
@@ -27,6 +33,7 @@ class BookControler extends Controller
      */
     public function create()
     {
+        $this->authorize("create", Book::class);
         $editors = Editor::all();
         return view('book.create', compact('editors'));
     }
@@ -36,6 +43,7 @@ class BookControler extends Controller
      */
     public function store(CreateBookRequest $request)
     {
+        $this->authorize("create", Book::class);
         //dd($request->all()); to dump the request data
         $request->file("cover")->store("public/covers"); //store file into the app/public/cover folder
 
@@ -63,7 +71,7 @@ class BookControler extends Controller
      */
     public function edit(Book $book)
     {
-
+        $this->authorize("edit", $book);
         $editors = Editor::all();
         return view('book.edit', compact('editors', "book"),);
     }
@@ -73,7 +81,7 @@ class BookControler extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-
+        $this->authorize("edit", $book);
         if ($request->hasFile("cover")) {
             Storage::delete("public/covers/" . $book->cover);
             $request->file("cover")->store("public/covers"); //store file into the app/public/cover folder
@@ -98,12 +106,15 @@ class BookControler extends Controller
      */
     public function destroy(Book $book)
     {
+
+        $this->authorize("delete", $book);
         $book->delete();
         return redirect()->route("book.index");
     }
 
     public function pdf(Book $book)
     {
+        $this->authorize("view", Book::class); // vérifier si la personne est autorisé à faire ça (le construct plus haut le permet sur le crud de base de l'appli)
         $pdf = Pdf::loadView('pdf.book', ["book" => $book]);
         return $pdf->download($book->title . '.pdf');
     }
