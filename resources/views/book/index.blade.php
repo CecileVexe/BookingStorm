@@ -27,11 +27,19 @@
                     <div class="group relative">
                         <h3 class="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                             <a href="{{ route('book.show', $book) }}">
-                                <span class="absolute inset-0"></span>
+                               
                                 {{ $book->title }}
                             </a>
                         </h3>
-                        <p class="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">{{ $book->price / 100 }}€ / mois</p>
+                        <div>
+                            <p class="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">{{ $book->price / 100 }}€ / mois</p>
+                            <form action="{{route("cart.addToCart")}}" method="post">
+                                @csrf
+                                <input name="book_id" hidden="true" type="text" value="{{$book->id}}">
+                            <button type="submit">Ajouter au panier</button>
+                            </form>
+                        </div>
+                        
                     </div>
                 </div>
             @endforeach

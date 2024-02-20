@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BookControler;
+use App\Http\Controllers\CartController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -52,7 +53,7 @@ Route::resource("book", BookControler::class)->except(["show", "index"])->middle
 //Permet de mettre une catégory en slug
 
 Route::get("/book/{book}", "App\Http\Controllers\BookControler@show")->name("book.show");
-Route::get("/{category?}", "App\Http\Controllers\BookControler@index")->name("book.index");
+
 Route::get("book/{book}/pdf", [BookControler::class, "pdf"])->name("book.pdf");
 
 Route::get(
@@ -79,3 +80,22 @@ Route::post(
     "/register",
     RegisterController::class . "@register"
 )->name("register");
+
+Route::middleware(["auth"])->group(function () {
+    Route::get(
+        "/cart",
+        CartController::class . "@show"
+    )
+        ->name("cart.show");
+
+    Route::post(
+        "/cart",
+        CartController::class . "@addToCart"
+    )
+        ->name("cart.addToCart");
+});
+
+
+
+//A mettre tout en bas car appelé en dernier mais même racine (remember MSW)
+Route::get("/{category?}", "App\Http\Controllers\BookControler@index")->name("book.index");

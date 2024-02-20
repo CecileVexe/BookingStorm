@@ -57,10 +57,11 @@
           @csrf
        <button type="submit" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se déconnecter</button>
         </form>
+        
+        <a href="{{route("cart.show")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Panier</a>
         @endauth  
         @guest
             <a href="{{route("login")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se Connecter</a>
-       
         <div>
        <a href="{{route("register")}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">S'inscrire
        </a>
