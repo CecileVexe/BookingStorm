@@ -12,6 +12,7 @@
       Hello world!
     </h1>-->
    
-    <x-navbar/> <div class="mt-20 px-6 ">   {{$slot}} </div>
+    <x-navbar/>  <div class="mt-20 px-6 "> <x-flash/>  {{$slot}} </div>
+
 </body>
 </html>

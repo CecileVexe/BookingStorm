@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BookControler;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
@@ -64,3 +65,13 @@ Route::post(
     "/logout",
     LogoutController::class . "@logout"
 )->name("logout");
+
+Route::get(
+    "/register",
+    RegisterController::class . "@show"
+)->name("register");
+
+Route::post(
+    "/register",
+    RegisterController::class . "@register"
+)->name("register");
