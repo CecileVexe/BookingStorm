@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 /*
 Route::get(
@@ -46,9 +46,13 @@ Route::post(
 
 Route::resource("book", BookControler::class)->except(["show", "index"])->middleware("auth");
 
-Route::resource("book", BookControler::class)->only(["show", "index"]);
+//Route::resource("book", BookControler::class)->only(["show", "index"]);
 //Route::resource créer toutes les routes pour le CRUD
 
+//Permet de mettre une catégory en slug
+
+Route::get("/book/{book}", "App\Http\Controllers\BookControler@show")->name("book.show");
+Route::get("/{category?}", "App\Http\Controllers\BookControler@index")->name("book.index");
 Route::get("book/{book}/pdf", [BookControler::class, "pdf"])->name("book.pdf");
 
 Route::get(

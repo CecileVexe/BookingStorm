@@ -21,6 +21,9 @@ class navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navbar');
+        $categories = \App\Models\Category::all();
+        return view('components.navbar', [
+            "categories" => $categories
+        ]);
     }
 }

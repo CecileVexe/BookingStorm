@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Editor;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,11 +23,17 @@ class BookControler extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $category = null)
     {
-
-        $books = Book::paginate(15);
-        return view('book.index', ["books" => $books]);
+        if ($category) {
+            $books = Book::whereHas("categories", function (Builder $query) use ($category) {
+                $query->where("slug", "=", $category);
+            })->paginate(15);
+            $category = Category::where("slug", $category)->first();
+        } else {
+            $books = Book::paginate(15);
+        }
+        return view('book.index', ["books" => $books, "category" => $category]); // ["books" => $books] passe le book au composant (like react)
     }
 
     /**

@@ -5,13 +5,21 @@
  
     <div class="container mx-auto">
         <h1 class="text-4xl p-6 font-bold">Notre catalogue</h1>
- 
+      @if($category)
+        <h2>{{$category->name}}</h2>
+        <p>{{$category->description}}</p>
+      @endif
         <div class="grid grid-cols-5 grid-cols-5 gap-6">
             @foreach ($books as $book)
                 <div class="flex flex-col">
                     <img src="{{asset("storage/covers/$book->cover")}}" class="w-full aspect-book object-cover rounded-lg shadow-lg mb-4"/>
                     <div class="flex items-center gap-x-4 text-xs">
                         <time datetime="{{ $book->published_at }}" class="text-gray-500">{{ $book->published_at->format('d M Y') }}</time>
+                        @foreach($book->categories as $categories)
+                        <a href="#" class="relative z-10 rounded-full bg-{{$categories->color}}-50 px3 py1.5 font-medium text-{{$categories->color}}-600 hover:bg-{{$categories->color}}-100">
+                            {{ $categories->name }}
+                        </a>
+                        @endforeach
                         <a href="#" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
                             {{ $book->editor->name }}
                         </a>
