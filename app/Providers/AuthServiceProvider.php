@@ -5,7 +5,9 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Book;
+use App\Models\OrderItem;
 use App\Policies\BookPolicy;
+use App\Policies\OrderItemPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -16,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Book::class =>  BookPolicy::class
+        Book::class =>  BookPolicy::class,
+        OrderItem::class => OrderItemPolicy::class
     ];
 
     /**
