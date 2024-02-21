@@ -20,4 +20,9 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
+    // Permet de relier le OrderItem au Book
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(Book::class); /*belongTo(Editor::class, "editor_id, "id")*/
+    }
 }

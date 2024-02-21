@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BookControler;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -89,11 +90,23 @@ Route::middleware(["auth"])->group(function () {
         ->name("cart.show");
 
     Route::post(
-        "/cart",
+        "/cart/item",
         CartController::class . "@addToCart"
     )
         ->name("cart.addToCart");
+
+    Route::post(
+        "/cart/complete",
+        CartController::class . "@complete"
+    )->name("cart.complete");
+
+    Route::delete(
+        "/cart/item/{orderItem}",
+        CartController::class . "@removeFromCart"
+    )->name("cart.remove");
 });
+
+
 
 
 

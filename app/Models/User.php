@@ -48,4 +48,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+    // Vérifie si l'utilisateur à déjà une order de status cart
+    public function cart(): Order
+    {
+        $order = $this->orders()->where("status", "=", "cart")->first(); //this fait référence au contexte de la classe actuel et appel la fonction order au dessus
+
+
+        if (!$order) {
+            $order = Order::create(
+                [
+                    "user_id" => $this->id,
+                    "total" => 10,
+                    "status" => "cart"
+                ]
+            );
+        }
+        return $order;
+    }
 }

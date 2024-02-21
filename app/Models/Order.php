@@ -20,4 +20,16 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function calculateTotal(): void
+    {
+        $total = 0;
+        foreach ($this->orderItems as $orderItem) {
+            $total += $orderItem->price * $orderItem->quantity;
+        };
+
+        $this->update([
+            "total" => $total,
+        ]);
+    }
 }
